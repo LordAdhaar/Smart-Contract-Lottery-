@@ -2,27 +2,29 @@
 
 pragma solidity ^0.8.18;
 
-/*
- * @title Smart Contract Lottery
- * @author Adhaar Jain
- * @about This contract is for creating a sample lottery
- * @dev We are using Chainlink VRFv2 and Chainlink Automation
- */
+/// @title A title that should describe the contract/interface
+/// @author The name of the author
+/// @notice Explain to an end user what this does
+/// @dev Explain to a developer any extra details
 
 contract Raffle {
     uint256 private immutable i_raffleTicketPrice;
+
+    error Raffle__SendMoreETHToEnterRaffle();
 
     constructor(uint256 raffleTicketPrice) {
         i_raffleTicketPrice = raffleTicketPrice;
     }
 
-    function enterRaffle() public {}
+    function buyRaffleTicket() public payable {
+        if (msg.value < i_raffleTicketPrice) {
+            revert Raffle__SendMoreETHToEnterRaffle();
+        }
+    }
 
     function pickWinner() public {}
 
-    /* GETTER FUNCTION */
-
-    function getRaffleTicketPrice() external view returns (uint256) {
+    function getRaffleTicketPrice() public view returns (uint256) {
         return i_raffleTicketPrice;
     }
 }
