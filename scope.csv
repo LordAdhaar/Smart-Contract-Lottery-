@@ -1,0 +1,5 @@
+language,filename,blank,comment,code,"github.com/AlDanial/cloc v 2.02  T=0.01 s (488.8 files/s 45616.8 lines/s)"
+Solidity,src/Raffle.sol,32,30,115
+Solidity,script/HelperConfig.s.sol,15,14,59
+Solidity,script/DeployRaffle.s.sol,4,1,10
+SUM,,51,45,184
