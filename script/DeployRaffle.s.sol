@@ -11,5 +11,25 @@ contract DeployRaffle is Script {
         deployContract();
     }
 
-    function deployContract() external returns (Raffle, HelperConfig) {}
+    function deployContract()
+        public
+        returns (Raffle, HelperConfig.NetworkConfig memory)
+    {
+        HelperConfig helperconfig = new HelperConfig();
+        HelperConfig.NetworkConfig memory activeNetwork = helperconfig
+            .getNetworkConfig();
+
+        vm.startBroadcast();
+        Raffle raffle = new Raffle(
+            activeNetwork.raffleTicketPrice,
+            activeNetwork.interval,
+            activeNetwork.subscriptionId,
+            activeNetwork.callbackGasLimit,
+            activeNetwork.vrfCoordinator,
+            activeNetwork.keyHash
+        );
+        vm.stopBroadcast();
+
+        return (raffle, activeNetwork);
+    }
 }
