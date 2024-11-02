@@ -4,6 +4,7 @@ pragma solidity ^0.8.19;
 
 import {Script} from "../lib/forge-std/src/Script.sol";
 import {VRFCoordinatorV2_5Mock} from "../lib/chainlink-brownie-contracts/contracts/src/v0.8/vrf/mocks/VRFCoordinatorV2_5Mock.sol";
+import {LinkToken} from "../test/mocks/LinkToken.sol";
 
 abstract contract CodeConstants {
     // MIGHT CAUSE ERROR LATER
@@ -25,6 +26,7 @@ contract HelperConfig is Script, CodeConstants {
         uint32 callbackGasLimit;
         address vrfCoordinator;
         bytes32 keyHash;
+        address linkToken;
     }
 
     // MIGHT CAUSE ERROR LATER NAME DIFF
@@ -57,10 +59,11 @@ contract HelperConfig is Script, CodeConstants {
             NetworkConfig({
                 raffleTicketPrice: 0.01 ether,
                 interval: 30,
-                subscriptionId: 0,
+                subscriptionId: 11444602845039372062572197156360110778940007239868027730611963421232005626774,
                 callbackGasLimit: 500000,
                 vrfCoordinator: 0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B,
-                keyHash: 0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae
+                keyHash: 0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae,
+                linkToken: 0x779877A7B0D9E8603169DdbD7836e478b4624789
             });
     }
 
@@ -77,6 +80,8 @@ contract HelperConfig is Script, CodeConstants {
             WEI_PER_UNIT_LINK
         );
 
+        LinkToken linkToken = new LinkToken();
+
         vm.stopBroadcast();
 
         return
@@ -88,7 +93,8 @@ contract HelperConfig is Script, CodeConstants {
                 callbackGasLimit: 500000,
                 vrfCoordinator: address(mockVRFCoordinator),
                 // does not matter yaar
-                keyHash: 0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae
+                keyHash: 0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae,
+                linkToken: address(linkToken)
             });
     }
 }

@@ -44,7 +44,7 @@ contract RaffleTest is Test {
     function testContractRevertWhenNotEnoughETHSent() public {
         vm.prank(USER);
         vm.expectRevert(Raffle.Raffle__SendMoreETHToEnterRaffle.selector);
-        raffle.enterRaffle{value: SENT_VALUE}();
+        raffle.enterRaffle{value: 0.0001 ether}();
     }
 
     function testEnterRaffle() public {
@@ -75,5 +75,30 @@ contract RaffleTest is Test {
         vm.expectRevert(Raffle.Raffle__RaffleNotOpen.selector);
         vm.prank(USER);
         raffle.enterRaffle{value: SENT_VALUE}();
+    }
+
+    function testCheckUpkeepReturnsFalseIfItHasNoBalance() public {
+        //arrange//act//asssert
+        vm.warp(block.timestamp + interval + 1);
+        vm.roll(block.number + 1);
+
+        (bool upkeepNeeded, ) = raffle.checkUpkeep("");
+
+        assertEq(upkeepNeeded, false);
+    }
+
+    function testCheckUpkeepReturnsFalseItIsNotOpen() public {
+        vm.prank(USER);
+        raffle.enterRaffle{value: SENT_VALUE}();
+        vm.warp(block.timestamp + interval + 1);
+        vm.roll(block.number + 1);
+        raffle.performUpkeep("");
+
+        vm.warp(block.timestamp + interval + 1);
+        vm.roll(block.number + 1);
+
+        (bool upkeepNeeded, ) = raffle.checkUpkeep("");
+
+        assertEq(upkeepNeeded, false);
     }
 }
