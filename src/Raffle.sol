@@ -68,6 +68,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
     event PlayerEnteredRaffle(address indexed player);
     event UpdateLastTimestamp();
     event WinnerPicked(address indexed player);
+    event RequestedRaffleWinner(uint256 indexed requestId);
 
     constructor(
         uint256 raffleTicketPrice,
@@ -144,6 +145,8 @@ contract Raffle is VRFConsumerBaseV2Plus {
             })
         );
 
+        emit RequestedRaffleWinner(requestId);
+
         s_lastTimestamp = block.timestamp;
 
         emit UpdateLastTimestamp();
@@ -179,11 +182,15 @@ contract Raffle is VRFConsumerBaseV2Plus {
         return s_raffleState;
     }
 
-    function getRaffleTimeStamp() public view returns (uint256) {
+    function getLastTimeStamp() public view returns (uint256) {
         return s_lastTimestamp;
     }
 
     function getPlayers() public view returns (address payable[] memory) {
         return s_players;
+    }
+
+    function getRecentWinner() public view returns (address payable) {
+        return s_recentWinner;
     }
 }
