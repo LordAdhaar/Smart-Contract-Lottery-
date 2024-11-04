@@ -27,6 +27,7 @@ contract HelperConfig is Script, CodeConstants {
         address vrfCoordinator;
         bytes32 keyHash;
         address linkToken;
+        address account;
     }
 
     // MIGHT CAUSE ERROR LATER NAME DIFF
@@ -59,11 +60,12 @@ contract HelperConfig is Script, CodeConstants {
             NetworkConfig({
                 raffleTicketPrice: 0.01 ether,
                 interval: 30,
-                subscriptionId: 11444602845039372062572197156360110778940007239868027730611963421232005626774,
+                subscriptionId: 16973107576037043617431256442494886523928673509170540614812800664079359408860,
                 callbackGasLimit: 500000,
                 vrfCoordinator: 0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B,
                 keyHash: 0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae,
-                linkToken: 0x779877A7B0D9E8603169DdbD7836e478b4624789
+                linkToken: 0x779877A7B0D9E8603169DdbD7836e478b4624789,
+                account: 0xb59D486d999743F2a0648349370bB9ab4A05e038
             });
     }
 
@@ -94,7 +96,8 @@ contract HelperConfig is Script, CodeConstants {
                 vrfCoordinator: address(mockVRFCoordinator),
                 // does not matter yaar
                 keyHash: 0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae,
-                linkToken: address(linkToken)
+                linkToken: address(linkToken),
+                account: 0x1804c8AB1F12E6bbf3894d4083f33e07309d1f38
             });
     }
 }

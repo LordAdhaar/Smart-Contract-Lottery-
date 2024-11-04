@@ -16,6 +16,8 @@ contract RaffleTest is Test {
     address public USER = makeAddr("Adhaar");
     uint256 public constant STARTING_USER_BALANCE = 1000 ether;
     uint256 public constant GAS_PRICE = 1;
+    address public constant REAL_VRFCOORDINATORV2_5 =
+        0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B;
 
     uint256 public raffleTicketPrice;
     uint256 public interval;
@@ -150,17 +152,32 @@ contract RaffleTest is Test {
         assertEq(uint256(raffleState), 1);
     }
 
-    function testFulfillRandomWordsCanOnlyBeCalledAfterPerformUpkeep(
-        uint256 randomRequestId
-    ) public raffleEntered {
+    function testFulfillRandomWordsCanOnlyBeCalledAfterPerformUpkeep()
+        public
+        raffleEntered
+        skipFork
+    {
         vm.expectRevert(VRFCoordinatorV2_5Mock.InvalidRequest.selector);
+
         VRFCoordinatorV2_5Mock(vrfCoordinator).fulfillRandomWords(
-            randomRequestId,
+            0,
             address(raffle)
         );
     }
 
-    function testFulfillRanomWordsPicksWinnerAndTransfersFunds() public {
+    //0xb2Ff1895a6CB2790399bE5AF4523dcD1833eA9f4
+    modifier skipFork() {
+        if (block.chainid != 31337) {
+            return;
+        }
+
+        _;
+    }
+
+    function testFulfillRanomWordsPicksWinnerAndTransfersFunds()
+        public
+        skipFork
+    {
         uint256 playersToBeAdded = 3;
         uint256 startingIndex = 1;
         address expectedWinner = address(uint160(3));
