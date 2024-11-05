@@ -2,8 +2,8 @@
 
 pragma solidity ^0.8.18;
 
-import {VRFConsumerBaseV2Plus} from "@chainlink/contracts/src/v0.8/vrf/dev/VRFConsumerBaseV2Plus.sol";
-import {VRFV2PlusClient} from "@chainlink/contracts/src/v0.8/vrf/dev/libraries/VRFV2PlusClient.sol";
+import {VRFConsumerBaseV2Plus} from "../lib/chainlink-brownie-contracts/contracts/src/v0.8/vrf/dev/VRFConsumerBaseV2Plus.sol";
+import {VRFV2PlusClient} from "../lib/chainlink-brownie-contracts/contracts/src/v0.8/vrf/dev/libraries/VRFV2PlusClient.sol";
 
 /// @title A title that should describe the contract/interface
 /// @author The name of the author
@@ -153,7 +153,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
     }
 
     function fulfillRandomWords(
-        uint256 requestId,
+        uint256 /*requestId*/,
         uint256[] calldata randomWords
     ) internal virtual override {
         uint256 indexOfWinner = randomWords[0] % s_players.length;
@@ -182,7 +182,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
         return s_raffleState;
     }
 
-    function getLastTimeStamp() public view returns (uint256) {
+    function getLastTimeStaimp() public view returns (uint256) {
         return s_lastTimestamp;
     }
 

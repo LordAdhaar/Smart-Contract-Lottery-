@@ -60,12 +60,12 @@ contract HelperConfig is Script, CodeConstants {
             NetworkConfig({
                 raffleTicketPrice: 0.01 ether,
                 interval: 30,
-                subscriptionId: 16973107576037043617431256442494886523928673509170540614812800664079359408860,
+                subscriptionId: 111541658002010607238146486755322566686118740982500272358553271918496528294237,
                 callbackGasLimit: 500000,
                 vrfCoordinator: 0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B,
                 keyHash: 0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae,
                 linkToken: 0x779877A7B0D9E8603169DdbD7836e478b4624789,
-                account: 0xb59D486d999743F2a0648349370bB9ab4A05e038
+                account: 0xb99822596ADa5fF795af305D98818E9ee4650C63
             });
     }
 

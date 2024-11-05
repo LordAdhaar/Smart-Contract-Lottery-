@@ -21,10 +21,18 @@ contract CreateSubscription is Script {
         address vrfCoordinator,
         address account
     ) public returns (uint256, address) {
+        uint256 subId;
         vm.startBroadcast(account);
-        uint256 subId = VRFCoordinatorV2_5Mock(vrfCoordinator)
-            .createSubscription();
+        subId = VRFCoordinatorV2_5Mock(vrfCoordinator).createSubscription();
         vm.stopBroadcast();
+
+        (, , , address owner, ) = VRFCoordinatorV2_5Mock(vrfCoordinator)
+            .getSubscription(subId);
+
+        console2.log("CREATE SUBSCRIPTION");
+        console2.log("Created subscription with ID:", subId);
+        console2.log("VRF Coordinator:", vrfCoordinator);
+        console2.log("Owner:", owner);
 
         return (subId, vrfCoordinator);
     }
@@ -53,6 +61,17 @@ contract FundSubscription is Script, CodeConstants {
         address linkToken,
         address account
     ) public {
+        (, , , address subscriptionIdOwner, ) = VRFCoordinatorV2_5Mock(
+            vrfCoordinator
+        ).getSubscription(subscriptionId);
+
+        console2.log("FUND SUBSCRIPTION");
+        console2.log("Funding subscription with ID:", subscriptionId);
+        console2.log("VRF Coordinator:", vrfCoordinator);
+        console2.log("Link Token:", linkToken);
+        console2.log("Account:", account);
+        console2.log("Owner", subscriptionIdOwner);
+
         if (block.chainid == ANVIL_CHAIN_ID) {
             vm.startBroadcast();
             VRFCoordinatorV2_5Mock(vrfCoordinator).fundSubscription(

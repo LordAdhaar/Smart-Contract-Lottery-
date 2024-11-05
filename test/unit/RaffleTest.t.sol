@@ -195,7 +195,7 @@ contract RaffleTest is Test {
         }
 
         // Recording the timestamp just after the players have entered
-        uint256 startingTimestamp = raffle.getLastTimeStamp();
+        uint256 startingTimestamp = raffle.getLastTimeStaimp();
         uint256 winnerStartingBalance = expectedWinner.balance; // 9.99 ether
 
         // ACT
@@ -217,7 +217,7 @@ contract RaffleTest is Test {
         // After that we assertEq variables inside Raffle.sol:fulfillRandomWords
         address recentWinner = raffle.getRecentWinner();
         uint256 winnerBalance = recentWinner.balance;
-        uint256 lastTimeStamp = raffle.getLastTimeStamp();
+        uint256 lastTimeStamp = raffle.getLastTimeStaimp();
         uint256 prize = raffleTicketPrice * (playersToBeAdded); // 0.01*3 = 0.03 ether
 
         assertEq(expectedWinner, recentWinner);
