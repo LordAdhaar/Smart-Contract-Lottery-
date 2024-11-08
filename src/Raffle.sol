@@ -4,6 +4,7 @@ pragma solidity ^0.8.18;
 
 import {VRFConsumerBaseV2Plus} from "../lib/chainlink-brownie-contracts/contracts/src/v0.8/vrf/dev/VRFConsumerBaseV2Plus.sol";
 import {VRFV2PlusClient} from "../lib/chainlink-brownie-contracts/contracts/src/v0.8/vrf/dev/libraries/VRFV2PlusClient.sol";
+import {console} from "forge-std/Console.sol";
 
 /// @title A title that should describe the contract/interface
 /// @author The name of the author
@@ -89,6 +90,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
     }
 
     function enterRaffle() public payable {
+        console.log("WASSUP DANGER");
         if (s_raffleState != RaffleState.OPEN) {
             revert Raffle__RaffleNotOpen();
         }
